@@ -1,0 +1,23 @@
+{
+    "name": "nbxproyect",
+    "version": "1.0.0",
+    "description": "CLI Fitness Management System using Node.js, MongoDB Transactions, SOLID principles, and Design Patterns.",
+    "main": "src/index.js",
+    "type": "module",
+    "scripts": {
+      "start": "node src/index.js"
+    },
+    "dependencies": {
+      "chalk": "^5.3.0",
+      "dayjs": "^1.11.10",
+      "dotenv": "^16.4.5",
+      "inquirer": "^9.2.22",
+      "mongodb": "^6.5.0"
+    },
+    "keywords": ["gym", "cli", "mongodb", "fitness", "solid"],
+    "author": "Scrypx-x",
+    "license": "MIT"
+  }
+
+
+  
