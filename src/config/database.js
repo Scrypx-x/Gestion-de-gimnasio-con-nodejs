@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -8,22 +8,35 @@ class Database {
     if (Database.instance) {
       return Database.instance;
     }
-    this.client = new MongoClient(process.env.MONGODB_URI);
-    this.db = null;
+
+    this.pool = mysql.createPool({
+      host: process.env.DB_HOST || 'localhost',
+      user: process.env.DB_USER || 'root',
+      password: process.env.DB_PASSWORD || '',
+      database: process.env.DB_NAME || 'nbx_fitness_db',
+      port: process.env.DB_PORT || 3306,
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0
+    });
+
     Database.instance = this;
   }
 
   async connect() {
-    if (!this.db) {
-      await this.client.connect();
-      this.db = this.client.db(process.env.DB_NAME);
-      console.log('Database connected successfully using official MongoDB driver.');
+    try {
+      const connection = await this.pool.getConnection();
+      console.log('Database connected successfully using MySQL driver.');
+      connection.release();
+      return this.pool;
+    } catch (error) {
+      console.error('Error connecting to MySQL database:', error.message);
+      throw error;
     }
-    return this.db;
   }
 
   async getClient() {
-    return this.client;
+    return this.pool;
   }
 }
 
