@@ -1,4 +1,4 @@
-# Gimnasio CLI
+# Gestion-de-gimnasio-com-nodejs
 
 Sistema de línea de comandos para administrar un gimnasio: clientes, planes de entrenamiento, contratos, pagos, seguimiento físico, nutrición y finanzas.
 
