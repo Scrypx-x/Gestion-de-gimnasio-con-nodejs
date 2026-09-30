@@ -3,41 +3,24 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-class Database {
-  constructor() {
-    if (Database.instance) {
-      return Database.instance;
-    }
+export const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT || 3306),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  dateStrings: true,      // DATE/DATETIME llegan como texto 'YYYY-MM-DD'
+  decimalNumbers: true    // DECIMAL llega como number y no como string
+});
 
-    this.pool = mysql.createPool({
-      host: process.env.DB_HOST || 'localhost',
-      user: process.env.DB_USER || 'root',
-      password: process.env.DB_PASSWORD || '',
-      database: process.env.DB_NAME || 'nbx_fitness_db',
-      port: process.env.DB_PORT || 3306,
-      waitForConnections: true,
-      connectionLimit: 10,
-      queueLimit: 0
-    });
-
-    Database.instance = this;
-  }
-
-  async connect() {
-    try {
-      const connection = await this.pool.getConnection();
-      console.log('Database connected successfully using MySQL driver.');
-      connection.release();
-      return this.pool;
-    } catch (error) {
-      console.error('Error connecting to MySQL database:', error.message);
-      throw error;
-    }
-  }
-
-  async getClient() {
-    return this.pool;
+export async function testConnection() {
+  const connection = await pool.getConnection();
+  try {
+    await connection.ping();
+  } finally {
+    connection.release();
   }
 }
-
-export default new Database();
