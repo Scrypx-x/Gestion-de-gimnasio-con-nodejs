@@ -1,4 +1,4 @@
-DROP DATABASE  IF  EXISTS gimnasio_db;
+    DROP DATABASE  IF  EXISTS gimnasio_db;
 CREATE DATABASE gimnasio_db
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
