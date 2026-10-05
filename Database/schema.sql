@@ -144,3 +144,15 @@ CREATE TABLE pagos (
     INDEX idx_pagos_fecha (fecha_pago),
     INDEX idx_pagos_estado (estado)
 );
+
+CREATE TABLE IF NOT EXISTS attendances (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    client_id INT NOT NULL,
+    plan_id INT NOT NULL,
+    session_date DATETIME NOT NULL,
+    session_type ENUM('grupo', 'individual') NOT NULL,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_client_id (client_id),
+    INDEX idx_session_date (session_date)
+);

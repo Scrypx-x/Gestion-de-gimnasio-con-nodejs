@@ -24,3 +24,17 @@ export class Cliente {
     if (!['activo', 'inactivo'].includes(this.estado)) throw new Error('Estado de cliente no válido.');
   }
 }
+
+class Asistencia {
+  constructor(id, client_id, plan_id, session_date, session_type, notes, created_at) {
+      this.id = id;
+      this.client_id = client_id;
+      this.plan_id = plan_id;
+      this.session_date = session_date;
+      this.session_type = session_type;
+      this.notes = notes;
+      this.created_at = created_at;
+  }
+}
+
+module.exports = Asistencia;
